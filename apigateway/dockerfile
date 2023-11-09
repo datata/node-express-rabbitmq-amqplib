@@ -1,0 +1,13 @@
+FROM node
+
+WORKDIR /app/apigateway
+
+COPY ./package.json ./apigateway
+COPY . .
+
+# JUST ONLY DOESNT WORKS
+# COPY ./apigateway . 
+
+RUN npm install
+
+CMD ["npm", "run", "dev"]
