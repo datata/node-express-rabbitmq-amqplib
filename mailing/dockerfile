@@ -1,0 +1,13 @@
+FROM node
+
+WORKDIR /app/mailing
+
+COPY ./package.json ./mailing
+COPY . .
+
+# JUST ONLY DOESNT WORKS
+# COPY ./mailing . 
+
+RUN npm install
+
+CMD ["npm", "run", "dev"]
