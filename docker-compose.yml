@@ -1,0 +1,49 @@
+version: '3.6'
+
+services:
+  apigetway:
+    build:
+      context: ./apigateway
+      dockerfile: ./dockerfile
+    container_name: datata-apigateway
+    ports:
+      - 3000:3000
+    volumes:
+      - ./apigateway:/app/apigateway
+      - ./apigateway/node_modules:/app/apigetway/node_modules
+    networks:
+      - datata_net
+
+  mailing:
+    build:
+      context: ./Mailing
+      dockerfile: ./dockerfile
+    container_name: datata-mailing
+    # ports:
+      # - 3001:3001
+    volumes:
+      - ./mailing:/app/mailing
+      - ./mailing/node_modules:/app/mailing/node_modules
+    networks:
+      - datata_net
+
+  # rabbitmq:
+  #   image: rabbitmq:3-management-alpine
+  #   container_name: 'datata-rabbitmq'
+  #   environment:
+  #     RABBITMQ_DEFAULT_USER: "datata"  # Cambia por tu nombre de usuario
+  #     RABBITMQ_DEFAULT_PASS: "12345"  # Cambia por tu contraseña
+  #   ports:
+  #       - 5672:5672
+  #       - 15672:15672
+  #   volumes:
+  #       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+  #       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+  #   networks:
+  #       - datata_net
+
+volumes:
+  node_modules:
+networks:
+  datata_net:
+    driver: bridge
