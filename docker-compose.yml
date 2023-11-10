@@ -16,9 +16,11 @@ services:
 
   mailing:
     build:
-      context: ./Mailing
+      context: ./mailing
       dockerfile: ./dockerfile
     container_name: datata-mailing
+    depends_on:
+      - rabbitmq
     # ports:
       # - 3001:3001
     volumes:
@@ -27,20 +29,20 @@ services:
     networks:
       - datata_net
 
-  # rabbitmq:
-  #   image: rabbitmq:3-management-alpine
-  #   container_name: 'datata-rabbitmq'
-  #   environment:
-  #     RABBITMQ_DEFAULT_USER: "datata"  # Cambia por tu nombre de usuario
-  #     RABBITMQ_DEFAULT_PASS: "12345"  # Cambia por tu contraseña
-  #   ports:
-  #       - 5672:5672
-  #       - 15672:15672
-  #   volumes:
-  #       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-  #       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-  #   networks:
-  #       - datata_net
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'datata-rabbitmq'
+    environment:
+      RABBITMQ_DEFAULT_USER: "datata"  # Cambia por tu nombre de usuario
+      RABBITMQ_DEFAULT_PASS: "12345"  # Cambia por tu contraseña
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - datata_net
 
 volumes:
   node_modules:
